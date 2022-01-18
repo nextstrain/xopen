@@ -19,8 +19,11 @@ xopen
 
 This small Python module provides an ``xopen`` function that works like the
 built-in ``open`` function, but can also deal with compressed files.
-Supported compression formats are gzip, bzip2 and xz. They are automatically
-recognized by their file extensions `.gz`, `.bz2` or `.xz`.
+Supported compression formats are gzip, bzip2, zstandard (zstd) and xz.
+When reading, the format is detected from the file content. When writing,
+the format is detected from the file name extension, which can be
+`.gz`, `.bz2`, `.xz` or `.zst` for compressed formats, or any other for
+uncompressed output.
 
 The focus is on being as efficient as possible on all supported Python versions.
 For example, ``xopen`` uses ``pigz``, which is a parallel version of ``gzip``,
@@ -98,6 +101,11 @@ If you also want to open S3 files, you may want to use that module instead.
 
 Changes
 -------
+
+v1.5.0
+~~~~~~
+
+* Add support for reading and writing zstandard (`.zst`) files.
 
 v1.4.0
 ~~~~~~
