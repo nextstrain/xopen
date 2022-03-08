@@ -2,7 +2,7 @@
   :target: https://github.com/pycompression/xopen
   :alt:
 
-.. image:: https://img.shields.io/pypi/v/xopen.svg?branch=master
+.. image:: https://img.shields.io/pypi/v/xopen.svg?branch=main
   :target: https://pypi.python.org/pypi/xopen
 
 .. image:: https://img.shields.io/conda/v/conda-forge/xopen.svg
@@ -30,14 +30,14 @@ when reading ``.gz`` files, so it is used both for reading and writing if it is
 available. For gzip compression levels 1 to 3,
 `igzip <https://github.com/intel/isa-l/>`_ is used for an even greater speedup.
 
-For use cases where using only the main thread is desired xopen can be used
+For use cases where using only the main thread is desired, xopen can be used
 with ``threads=0``. This will use `python-isal
 <https://github.com/pycompression/python-isal>`_ (which binds isa-l) if
 python-isal is installed (automatic on Linux systems, as it is a requirement).
 For installation instructions for python-isal please
 checkout the `python-isal homepage
 <https://github.com/pycompression/python-isal>`_. If python-isal is not
-available ``gzip.open`` is used.
+available, ``gzip.open`` is used.
 
 This module has originally been developed as part of the `Cutadapt
 tool <https://cutadapt.readthedocs.io/>`_ that is used in bioinformatics to
@@ -98,6 +98,15 @@ If you also want to open S3 files, you may want to use that module instead.
 
 Changes
 -------
+
+development version
+~~~~~~~~~~~~~~~~~~~
+
+* Issue #94: When writing gzip files, the timestamp and name of the original
+  file is omitted (equivalent to using ``gzip -n`` on the command line).
+  This allows files to be written in a reproducible manner.
+  (The bzip2 and xz compression methods do not store this information in the
+  header and are therefore already reproducible.)
 
 v1.4.0
 ~~~~~~
