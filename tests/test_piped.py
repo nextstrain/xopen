@@ -307,3 +307,14 @@ def test_valid_compression_levels(writer, level, tmp_path):
     with writer(path, "wb", level) as handle:
         handle.write(b"test")
     assert gzip.decompress(path.read_bytes()) == b"test"
+
+
+def test_reproducible_gzip_compression(gzip_writer, tmp_path):
+    path = tmp_path / "file.gz"
+    with gzip_writer(path, mode="wb") as f:
+        print(f)
+        f.write(b"hello")
+
+    data = path.read_bytes()
+    assert (data[3] & 8) == 0, "gzip header contains file name"
+    assert data[4:8] == b"\0\0\0\0", "gzip header contains mtime"
